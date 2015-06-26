@@ -86,11 +86,7 @@ rm(file_name)
 rm(killswitch)
 rm(working_dir)
 
-pop_names <- unique(namelist[,2])
-pop_names <- pop_names[which(pop_names!="outgroup")]
-
-output <- t(as.matrix(c("ingroup","outgroup","Allele1",pop_names,"Allele2",pop_names,"locus","SNP")))
-
+#The next little bit is massaging our data so we know which rows are from what population etc etc
 lengthinput <- length(input)
 input <- input[2:lengthinput]
 
@@ -120,9 +116,112 @@ stop("Your namelist.txt and structure.tsv files do not have the same taxa listed
 }
 
 inputmatrixdata <- cbind(namelist[,2],inputmatrixdata)
+inputmatrixdata <- inputmatrixdata[order(inputmatrixdata[,1]),]
+
+pop_names <- unique(inputmatrixdata[,1])
+pop_names <- pop_names[which(pop_names!="outgroup")]
+
+output <- t(as.matrix(c("ingroup","outgroup","Allele1",pop_names,"Allele2",pop_names,"locus","SNP")))
+
+pop_coordinates <- rbind(inputmatrixdata[2,1],2)
+i <- 2
+
+while (i <= (matrixlength-1)) {
+x <- i+1
+while((x<=(matrixlength-1))&&(inputmatrixdata[i,1]==inputmatrixdata[x,1])) {
+x <- x + 1
+}
+if(x<=(matrixlength-1)){
+print(x)
+pop_coordinate_temp <- rbind(inputmatrixdata[x,1],(x+1))
+pop_coordinates <- cbind(pop_coordinates,pop_coordinate_temp)
+i <- x
+} else {
+i <- matrixlength
+}
+}
 
 inputmatrix <- rbind(inputmatrixheader,inputmatrixdata)
+matrixwidth <- dim(inputmatrix)[2]
+matrixlength <- dim(inputmatrix)[1]
+
+no_pops <- dim(pop_coordinates)[2]
+
+rm(pop_names)
+rm(inputmatrixdata)
+rm(inputmatrixheader)
+rm(pop_coordinate_temp)
+
+print(noquote("We've got the data into a format that we can start manipulating to get the SNP frequencies from"))
+print(noquote(""))
+flush.console()
 
 
+print(noquote("We've got the data in a format that we can start manipulating to get the SNP frequencies from"))
+print(noquote(""))
+flush.console()
+
+# Option one, here we go
+if (opt1=="yes") {
+print(noquote("You've said you'd like to do opt1 - maximizing ingroup data when chosing the SNP from each locus. Here we go with that"))
+print(noquote(""))
+flush.console()
+
+
+##### THIS LOOP NEEDS WORK: TRYING TO SUM THE MISSING DATA OVER THE INGROUPS AT EACH SNP FOR A GIVEN LOCUS. THEN I'LL CHOSE THESNP WITH TEH LEAST MISSING DATA TO SUMMARIZE
+i <- 4
+while (i <= matrixwidth) {
+x <- i+1
+while((x<=matrixwidth)&&(inputmatrix[1,i]==inputmatrix[1,x])) {
+x <- x + 1
+}
+if(x<=matrixwidth){
+y <- i
+j <- 1
+temp <- matrix(0,ncol=(x-i),nrow=2)
+while(y < x) {
+temp[1,j] <- y
+for (k in 1:no_pops) {
+if(pop_coordinates[1,k]!="outgroup") {
+if(k==no_pops) {
+temp[2,j] <- temp[2,j] + sum(inputmatrix[(pop_coordinates[2,k]):matrixlength,i]==3)
+} else {
+temp[2,j] <- temp[2,j] + sum(inputmatrix[(pop_coordinates[2,k]):(as.numeric(pop_coordinates[2,(k+1)])-1),i]==3)
+}
+}
+}
+y <- y+1
+j <- j+1
+}
+}
+i <- x
+}
+
+print(x)
+pop_coordinate_temp <- rbind(inputmatrixdata[x,1],x)
+pop_coordinates <- cbind(pop_coordinates,pop_coordinate_temp)
+i <- x
+} else {
+i <- matrixlength
+}
+}
+
+
+
+
+
+
+###########
+while (inputmatrix[1,i]==inputmatrix[1,(i+x)]) {
+x <- x+1
+}
+
+
+
+
+i <- i + x }
+
+
+4:
 
 write.table(temp, "tempout",quote=FALSE, col.names=FALSE,row.names=FALSE)
