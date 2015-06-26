@@ -51,6 +51,23 @@ if(error_four==4) {
 cat("Would you like create a dataset taking the SNP where your multiple outgroups have the same \n'ancestral' state?\nopt2== \"Y\"/\"N\"\n\n")
 }
 
+#Checking status of working directory
+print(noquote("STEP ONE: Loading in all the variables"))
+print(noquote(""))
+print(noquote("An error message after this indicates your working directory is not valid"))
+flush.console()
+setwd(working_dir)
+print(noquote("Not to worry, your working directory IS valid! I've successfully set the working directory"))
+print(noquote(""))
+flush.console()
+
+#Checking status of structure file
+print(noquote("An error message after this indicates your structure.tsv file is not located in the directory you listed"))
+flush.console()
+input <- readLines(file_name)
+print(noquote("Not to worry, your file IS located in the directory!"))
+print(noquote(""))
+flush.console()
 
 # A tab-delimited file with your sample names in the left-hand column and population/species designation in the right-hand.
 # Make sure to label any of the outgroups with "outgroup" (lowercase)
@@ -60,32 +77,52 @@ namelist <- as.matrix(read.table("namelist.txt"))
 print(noquote("All good, I've found namelist.txt"))
 flush.console()
 
+rm(error_one)
+rm(error_two)
+rm(x)
+rm(error_four)
+rm(error_three)
+rm(file_name)
+rm(killswitch)
+rm(working_dir)
 
+pop_names <- unique(namelist[,2])
+pop_names <- pop_names[which(pop_names!="outgroup")]
 
+output <- t(as.matrix(c("ingroup","outgroup","Allele1",pop_names,"Allele2",pop_names,"locus","SNP")))
 
-temp <- readLines("temp")
+lengthinput <- length(input)
+input <- input[2:lengthinput]
 
-lentemp <- length(temp)
+matrixwidth <- length(unlist(strsplit(input[1],"\t")))
 
-lennamelist <- dim(namelist)[1]
+inputmatrix <- matrix("",ncol=matrixwidth,nrow=(lengthinput-1))
 
-outtemp <- matrix(NA,nrow=lentemp,ncol=1)
-
-for (i in 1:lentemp) {
-x <- 0
-templine <- unlist(strsplit(temp[i],"\t"))
-lentempline <- length(templine)
-for (j in 1:lentempline) {
-for (k in 1:lennamelist) {
-if ((length(grep(namelist[k,2],templine[j])))>0) {
-x <- 1
-templine[j] <- namelist[k,1]
-break
+for (i in 1:(lengthinput-1)) {
+inputmatrix[i,] <- unlist(strsplit(input[i],"\t"))
 }
+
+rm(input)
+rm(lengthinput)
+rm(matrixwidth)
+
+namelist <- rbind(namelist,namelist)
+namelist <- namelist[order(namelist[,1]),]
+
+matrixlength <- dim(inputmatrix)[1]
+inputmatrixheader <- cbind("",t(inputmatrix[1,]))
+inputmatrixdata <- inputmatrix[2:matrixlength,]
+
+inputmatrixdata <- inputmatrixdata[order(inputmatrixdata[,1]),]
+
+if(all(inputmatrixdata[,1]==namelist[,1])==FALSE) {
+stop("Your namelist.txt and structure.tsv files do not have the same taxa listed. Please fix your files and try again")
 }
-if (x==1) {break}
-}
-temp[i] <- paste(templine,collapse="\t")
-}
+
+inputmatrixdata <- cbind(namelist[,2],inputmatrixdata)
+
+inputmatrix <- rbind(inputmatrixheader,inputmatrixdata)
+
+
 
 write.table(temp, "tempout",quote=FALSE, col.names=FALSE,row.names=FALSE)
