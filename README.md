@@ -1,4 +1,4 @@
-# creating_dadi_SNP_input_from_SNAPP
+# creating_dadi_SNP_input_from_structure [still a work in progress i.e. I haven't finished coding it...]
 Do you want to chuck your SNPs through dadi, but are coming from stacks/SNAPP? This script might help
 
 #How does it work?#
