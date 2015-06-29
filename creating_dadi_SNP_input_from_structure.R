@@ -132,7 +132,6 @@ while((x<=(matrixlength-1))&&(inputmatrixdata[i,1]==inputmatrixdata[x,1])) {
 x <- x + 1
 }
 if(x<=(matrixlength-1)){
-print(x)
 pop_coordinate_temp <- rbind(inputmatrixdata[x,1],(x+1))
 pop_coordinates <- cbind(pop_coordinates,pop_coordinate_temp)
 i <- x
@@ -215,37 +214,78 @@ y <- y+1
 j <- j+1
 }
 
-
-
+temp2 <- NULL
+tempwidth <- dim(temp)[2]
+for (m in 1:tempwidth) {
+if (sum(temp[3:6,m]==0)==2) {
+tempster <- rbind(m,as.matrix(temp[,m]))
+temp2 <- cbind(temp2,tempster)
+}
 }
 
-m <- which.min(temp[2,])
-templocus <- inputmatrix[1,temp[1,m]]
-tempSNP <- m
-
-
-
-
+if (is.null(temp2)) {
+break
 }
 
+prop <- 1
+n <- NULL
+tempwidth <- dim(temp2)[2]
+if(min(temp2[3,])==max(temp2[3,])) {
+for (m in 1:tempwidth) {
+proptest <- max(temp2[4:7,m])/sum(temp2[4:7,m])
+if (proptest < prop) {
+prop <- proptest
+n <- m
+}
+}
+} else {
+n <- which.min(temp2[3,])
+}
+
+###################UP TO HERE CHECKING THE FOR-LOOP. INPUTMATRIX VALUES 1955-1961 ARE GOOD ONES TO TEST
+
+templocus <- inputmatrix[1,temp[1,n]]
+tempSNP <- temp2[2,n]
+
+temp1 <- matrix(0,ncol=no_pops,nrow=4)
+for (k in 1:no_pops) {
+if(k==no_pops) {
+temp1[1,k] <- temp1[1,k] + sum(inputmatrix[(pop_coordinates[2,k]):matrixlength,temp2[2,n]]==1)
+temp1[2,k] <- temp1[2,k] + sum(inputmatrix[(pop_coordinates[2,k]):matrixlength,temp2[2,n]]==2)
+temp1[3,k] <- temp1[3,k] + sum(inputmatrix[(pop_coordinates[2,k]):matrixlength,temp2[2,n]]==3)
+temp1[4,k] <- temp1[4,k] + sum(inputmatrix[(pop_coordinates[2,k]):matrixlength,temp2[2,n]]==4)
+} else {
+temp1[1,k] <- temp1[1,k] + sum(inputmatrix[(pop_coordinates[2,k]):(as.numeric(pop_coordinates[2,(k+1)])-1),temp2[2,n]]==1)
+temp1[2,k] <- temp1[2,k] + sum(inputmatrix[(pop_coordinates[2,k]):(as.numeric(pop_coordinates[2,(k+1)])-1),temp2[2,n]]==2)
+temp1[3,k] <- temp1[3,k] + sum(inputmatrix[(pop_coordinates[2,k]):(as.numeric(pop_coordinates[2,(k+1)])-1),temp2[2,n]]==3)
+temp1[4,k] <- temp1[4,k] + sum(inputmatrix[(pop_coordinates[2,k]):(as.numeric(pop_coordinates[2,(k+1)])-1),temp2[2,n]]==4)
+}
+}
 
 tempoutgroup <- which.max(temp1[,outgroupcol])
+sumallele <- matrix(0,ncol=1,nrow=4)
+sumallele[1,1] <- sum(temp1[1,])-temp1[1,outgroupcol] 
+sumallele[2,1] <- sum(temp1[2,])-temp1[2,outgroupcol] 
+sumallele[3,1] <-  sum(temp1[3,])-temp1[3,outgroupcol]
+sumallele[4,1] <-  sum(temp1[4,])-temp1[4,outgroupcol]
+tempmajallele <- which.max(sumallele[,1])
 
+tempallele1 <- t(as.matrix(temp1[tempmajallele,-outgroupcol]))
 
-majallele <- which.max(sumallele[,1])
+sumallele[tempmajallele,] <- 0
+tempminallele <- which.max(sumallele[,1])
+tempallele2 <- t(as.matrix(temp1[tempminallele,-outgroupcol]))
 
-
-
-
-
-
-
-
-
-
-
+toadd <- cbind(tempmajallele,tempoutgroup,tempmajallele,tempallele1,tempminallele,tempallele2,templocus,tempSNP)
+output <- rbind(output,toadd)
+}
 i <- x
 }
+}
+
+
+
+###########
 
 print(x)
 pop_coordinate_temp <- rbind(inputmatrixdata[x,1],x)
@@ -261,7 +301,6 @@ i <- matrixlength
 
 
 
-###########
 while (inputmatrix[1,i]==inputmatrix[1,(i+x)]) {
 x <- x+1
 }
