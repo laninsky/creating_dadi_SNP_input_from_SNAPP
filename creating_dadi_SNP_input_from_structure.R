@@ -156,10 +156,11 @@ print(noquote("We've got the data into a format that we can start manipulating t
 print(noquote(""))
 flush.console()
 
-
 print(noquote("We've got the data in a format that we can start manipulating to get the SNP frequencies from"))
 print(noquote(""))
 flush.console()
+
+outgroupcol <- which(pop_coordinates[1,]=="outgroup")
 
 # Option one, here we go
 if (opt1=="yes") {
@@ -167,33 +168,82 @@ print(noquote("You've said you'd like to do opt1 - maximizing ingroup data when 
 print(noquote(""))
 flush.console()
 
-
-##### THIS LOOP NEEDS WORK: TRYING TO SUM THE MISSING DATA OVER THE INGROUPS AT EACH SNP FOR A GIVEN LOCUS. THEN I'LL CHOSE THESNP WITH TEH LEAST MISSING DATA TO SUMMARIZE
 i <- 4
 while (i <= matrixwidth) {
 x <- i+1
 while((x<=matrixwidth)&&(inputmatrix[1,i]==inputmatrix[1,x])) {
 x <- x + 1
 }
+
 if(x<=matrixwidth){
 y <- i
 j <- 1
-temp <- matrix(0,ncol=(x-i),nrow=2)
+temp <- matrix(0,ncol=(x-i),nrow=6)
+
 while(y < x) {
+temp1 <- matrix(0,ncol=no_pops,nrow=4)
 temp[1,j] <- y
 for (k in 1:no_pops) {
-if(pop_coordinates[1,k]!="outgroup") {
 if(k==no_pops) {
-temp[2,j] <- temp[2,j] + sum(inputmatrix[(pop_coordinates[2,k]):matrixlength,i]==3)
+
+temp1[1,k] <- temp1[1,k] + sum(inputmatrix[(pop_coordinates[2,k]):matrixlength,y]==1)
+temp1[2,k] <- temp1[2,k] + sum(inputmatrix[(pop_coordinates[2,k]):matrixlength,y]==2)
+temp1[3,k] <- temp1[3,k] + sum(inputmatrix[(pop_coordinates[2,k]):matrixlength,y]==3)
+temp1[4,k] <- temp1[4,k] + sum(inputmatrix[(pop_coordinates[2,k]):matrixlength,y]==4)
+temp[2,j] <- temp[2,j] + sum(inputmatrix[(pop_coordinates[2,k]):matrixlength,y]==0)
 } else {
-temp[2,j] <- temp[2,j] + sum(inputmatrix[(pop_coordinates[2,k]):(as.numeric(pop_coordinates[2,(k+1)])-1),i]==3)
+temp1[1,k] <- temp1[1,k] + sum(inputmatrix[(pop_coordinates[2,k]):(as.numeric(pop_coordinates[2,(k+1)])-1),y]==1)
+temp1[2,k] <- temp1[2,k] + sum(inputmatrix[(pop_coordinates[2,k]):(as.numeric(pop_coordinates[2,(k+1)])-1),y]==2)
+temp1[3,k] <- temp1[3,k] + sum(inputmatrix[(pop_coordinates[2,k]):(as.numeric(pop_coordinates[2,(k+1)])-1),y]==3)
+temp1[4,k] <- temp1[4,k] + sum(inputmatrix[(pop_coordinates[2,k]):(as.numeric(pop_coordinates[2,(k+1)])-1),y]==4)
+temp[2,j] <- temp[2,j] + sum(inputmatrix[(pop_coordinates[2,k]):(as.numeric(pop_coordinates[2,(k+1)])-1),y]==0)
 }
 }
-}
+
+sumallele <- matrix(0,ncol=1,nrow=4)
+sumallele[1,1] <- sum(temp1[1,])-temp1[1,outgroupcol] 
+sumallele[2,1] <- sum(temp1[2,])-temp1[2,outgroupcol] 
+sumallele[3,1] <-  sum(temp1[3,])-temp1[3,outgroupcol]
+sumallele[4,1] <-  sum(temp1[4,])-temp1[4,outgroupcol]
+
+temp[3,j] <- sumallele[1,1]
+temp[4,j] <- sumallele[2,1]
+temp[5,j] <- sumallele[3,1]
+temp[6,j] <- sumallele[4,1]
+
 y <- y+1
 j <- j+1
 }
+
+
+
 }
+
+m <- which.min(temp[2,])
+templocus <- inputmatrix[1,temp[1,m]]
+tempSNP <- m
+
+
+
+
+}
+
+
+tempoutgroup <- which.max(temp1[,outgroupcol])
+
+
+majallele <- which.max(sumallele[,1])
+
+
+
+
+
+
+
+
+
+
+
 i <- x
 }
 
