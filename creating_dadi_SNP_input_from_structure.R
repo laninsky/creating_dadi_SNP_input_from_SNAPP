@@ -174,7 +174,7 @@ while((x<=matrixwidth)&&(inputmatrix[1,i]==inputmatrix[1,x])) {
 x <- x + 1
 }
 
-if(x<=matrixwidth){
+if(x<=(matrixwidth+1)){
 y <- i
 j <- 1
 temp <- matrix(0,ncol=(x-i),nrow=6)
