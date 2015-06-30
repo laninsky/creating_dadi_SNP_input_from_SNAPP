@@ -223,12 +223,9 @@ temp2 <- cbind(temp2,tempster)
 }
 }
 
-if (is.null(temp2)) {
-break
-}
-
+if (!(is.null(temp2))) {
 prop <- 1
-n <- NULL
+n <- which.min(temp2[3,])
 tempwidth <- dim(temp2)[2]
 if(min(temp2[3,])==max(temp2[3,])) {
 for (m in 1:tempwidth) {
@@ -239,13 +236,30 @@ n <- m
 }
 }
 } else {
-n <- which.min(temp2[3,])
+temp3 <- NULL
+if (sum(temp2[3,]==min(temp2[3,]))>1) {
+for (m in 1:tempwidth) {
+if (temp2[3,m]==min(temp2[3,])) {
+tempster <- rbind(as.matrix(temp2[,m]))
+temp3 <- cbind(temp3,tempster)
+}
+}
+temp2 <- temp3
+tempwidth <- dim(temp2)[2]
+if(min(temp2[3,])==max(temp2[3,])) {
+for (m in 1:tempwidth) {
+proptest <- max(temp2[4:7,m])/sum(temp2[4:7,m])
+if (proptest < prop) {
+prop <- proptest
+n <- m
+}
+}
+}
+}
 }
 
-###################UP TO HERE CHECKING THE FOR-LOOP. INPUTMATRIX VALUES 1955-1961 ARE GOOD ONES TO TEST
-
-templocus <- inputmatrix[1,temp[1,n]]
-tempSNP <- temp2[2,n]
+templocus <- inputmatrix[1,temp2[2,n]]
+tempSNP <- temp2[1,n]
 
 temp1 <- matrix(0,ncol=no_pops,nrow=4)
 for (k in 1:no_pops) {
@@ -279,8 +293,13 @@ tempallele2 <- t(as.matrix(temp1[tempminallele,-outgroupcol]))
 toadd <- cbind(tempmajallele,tempoutgroup,tempmajallele,tempallele1,tempminallele,tempallele2,templocus,tempSNP)
 output <- rbind(output,toadd)
 }
+}
 i <- x
 }
+
+
+#and here is where we need to translate the numbers to nucleotides, make sure to print out with row names false
+
 }
 
 
