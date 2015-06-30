@@ -2,6 +2,8 @@ creating_dadi_SNP_input_from_structure <- function(working_dir,file_name,opt1,op
 
 library(stringr)
 
+##############TO ADD: SPECIFY CUSTOM NAMELIST.TXT NAME INSTEAD OF IT HAVING TO BE NAMELIST.TXT
+
 # Throwing out error messages if any of the inputs are missing from the command line
 x <- 0
 error_one <- 0
@@ -297,9 +299,50 @@ output <- rbind(output,toadd)
 i <- x
 }
 
+rm(i)               
+rm(j)               
+rm(k)               
+rm(m)              
+rm(matrixlength)    
+rm(matrixwidth)     
+rm(n)           
+rm(prop)           
+rm(proptest)        
+rm(sumallele)       
+rm(temp)            
+rm(temp1)           
+rm(temp2)          
+rm(temp3)           
+rm(tempallele1)     
+rm(tempallele2)     
+rm(templocus)       
+rm(tempmajallele)  
+rm(tempminallele)   
+rm(tempoutgroup)    
+rm(tempSNP)         
+rm(tempster)        
+rm(tempwidth)      
+rm(toadd)           
+rm(x)               
+rm(y) 
 
-#and here is where we need to translate the numbers to nucleotides, make sure to print out with row names false
+outputlength <- dim(output)[1]
+output[2:outputlength,1:2] <- replace(output[2:outputlength,1:2],output[2:outputlength,1:2]==1,"-A-")
+output[2:outputlength,1:2] <- replace(output[2:outputlength,1:2],output[2:outputlength,1:2]==2,"-C-")
+output[2:outputlength,1:2] <- replace(output[2:outputlength,1:2],output[2:outputlength,1:2]==3,"-G-")
+output[2:outputlength,1:2] <- replace(output[2:outputlength,1:2],output[2:outputlength,1:2]==4,"-T-")
 
+output[2:outputlength,3] <- replace(output[2:outputlength,3],output[2:outputlength,3]==1,"A")
+output[2:outputlength,3] <- replace(output[2:outputlength,3],output[2:outputlength,3]==2,"C")
+output[2:outputlength,3] <- replace(output[2:outputlength,3],output[2:outputlength,3]==3,"G")
+output[2:outputlength,3] <- replace(output[2:outputlength,3],output[2:outputlength,3]==4,"T")
+
+output[2:outputlength,(no_pops*2)] <- replace(output[2:outputlength,(no_pops*2)],output[2:outputlength,(no_pops*2)]==1,"A")
+output[2:outputlength,(no_pops*2)] <- replace(output[2:outputlength,(no_pops*2)],output[2:outputlength,(no_pops*2)]==2,"C")
+output[2:outputlength,(no_pops*2)] <- replace(output[2:outputlength,(no_pops*2)],output[2:outputlength,(no_pops*2)]==3,"G")
+output[2:outputlength,(no_pops*2)] <- replace(output[2:outputlength,(no_pops*2)],output[2:outputlength,(no_pops*2)]==4,"T")
+
+write.table(output,"opt1_output.txt", sep="\t",quote=FALSE, row.names=FALSE,col.names=FALSE)
 }
 
 
