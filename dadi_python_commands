@@ -1,0 +1,28 @@
+###Instructions for windows###
+
+open IPython (Py2.7)
+
+import numpy
+
+import scipy
+
+import matplotlib
+
+import dadi
+
+import matplotlib.pyplot as pyplot
+
+#The following instructions are for the "ingroup-SNP-optimized" file (opt1)
+
+dd = dadi.Misc.make_data_dict("C:/pathway_to_file/opt1_output.txt")
+
+#change your pop_ids to the population names you have used. For this file, we want to use polarized = False,
+#because we aren't super confident in our ancestral states
+
+fs = dadi.Spectrum.from_data_dict(dd , pop_ids =['Migrant',	'Sedentary'] ,projections =[9 , 29] ,polarized = False)
+
+fs = dadi.Spectrum.from_data_dict(dd , pop_ids =['Migrant',	'Sedentary'] ,projections =[9 , 9] ,polarized = False)
+
+dadi.Plotting.plot_single_2d_sfs( fs , vmin =1)
+
+pyplot.show()
