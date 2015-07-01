@@ -17,11 +17,11 @@ import matplotlib.pyplot as pyplot
 dd = dadi.Misc.make_data_dict("C:/pathway_to_file/opt1_output.txt")
 
 #change your pop_ids to the population names you have used. For this file, we want to use polarized = False,
-#because we aren't super confident in our ancestral states
+#because we aren't super confident in our ancestral states. To figure out the projections you should use, you might have to
+#load the spectrum multiple times playing around with this. If you have no missing data, it should be 2N where N is your
+#sample size for each populaiton. In our case, this ended up being the minimum number of samples for any given SNP.
 
-fs = dadi.Spectrum.from_data_dict(dd , pop_ids =['Migrant',	'Sedentary'] ,projections =[9 , 29] ,polarized = False)
-
-fs = dadi.Spectrum.from_data_dict(dd , pop_ids =['Migrant',	'Sedentary'] ,projections =[9 , 9] ,polarized = False)
+fs = dadi.Spectrum.from_data_dict(dd , pop_ids =['Migrant',	'Sedentary'] ,projections =[10 , 46] ,polarized = False)
 
 dadi.Plotting.plot_single_2d_sfs( fs , vmin =1)
 
