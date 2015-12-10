@@ -3,7 +3,7 @@ Do you want to chuck your SNPs through dadi, but are coming from stacks/SNAPP? T
 
 #How does it work?#
 
-This script expects a *structure.tsv file as input that you've created through stacks. This file will have a commented first row, followed by a row specifying the locus (as multiple SNPs can be accepted from one locus for structure). The next row is the data, with the sample name in the first column, assigned population in the next column, followed by the SNP call (0-4) for each position of each locus (see example file).
+This script expects a *structure.tsv file as input that you've created through stacks. This file will have a commented first row, followed by a row specifying the locus (as multiple SNPs can be accepted from one locus for structure). The next row is the data, with the sample name in the first column, assigned population in the next column, followed by the SNP call (0-4) for each position of each locus (see example file). You can create a file which will work with this script from the output of https://github.com/laninsky/ambigoos_into_structure by deleting the second row of full_SNP_record.txt (the site-specific position of SNPs within each locus), and adding a row at the top of the file starting with a comment (e.g. #blahblah). This should also be a file that you have added the population designations to.
 
 Using a tab-delimited file with your sample names in the left column, and your species/population designations in the right hand column (with outgroup species labelled as "outgroup"), this script will create a SNP input file for dadi (pulling out one SNP per locus) using two slightly different implementations:
 
