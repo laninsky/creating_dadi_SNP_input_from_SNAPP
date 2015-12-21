@@ -5,7 +5,28 @@ Do you want to chuck your SNPs through dadi, but are coming from stacks/SNAPP? T
 
 This script expects a *structure.tsv file as input that you've created through stacks. This file will have a commented first row, followed by a row specifying the locus (as multiple SNPs can be accepted from one locus for structure). The next row is the data, with the sample name in the first column, assigned population in the next column, followed by the SNP call (0-4) for each position of each locus (see example file). You can create a file which will work with this script from the output of https://github.com/laninsky/ambigoos_into_structure by deleting the second row of full_SNP_record.txt (the site-specific position of SNPs within each locus), and adding a row at the top of the file starting with a comment (e.g. #blahblah). Make sure the beginning of the row with locus IDs has two spaces at the beginning. This should also be a file that you have added the population designations to.
 
-Using a tab-delimited file ("namelist.txt") with your sample names in the left column, and your species/population designations in the right hand column (with outgroup species labelled as "outgroup"), this script will create a SNP input file for dadi (pulling out one SNP per locus) using two slightly different implementations:
+e.g.
+```
+#blahblahblah
+  2 2 2 13 13 13 13
+sample1 pop2 0 1 2 2 3 3 2 
+sample1 pop2 0 1 1 2 3 3 4
+sample2 pop3 1 1 1 2 3 3 4
+sample2 pop3 2 1 1 2 3 3 4
+sample3 outgroup 1 1 1 1 2 2 2
+sample3 outgroup 1 1 1 1 2 2 2
+```
+
+Using a tab-delimited file ("namelist.txt") with your sample names (just once, rather than duplicated for each allele as they are in the structure file) in the left column, and your species/population designations in the right hand column (with outgroup species labelled as "outgroup")...
+
+e.g.
+```
+sample1 pop2
+sample2 pop3
+sample3 outgroup
+```
+
+...this script will create a SNP input file for dadi (pulling out one SNP per locus) using two slightly different implementations:
 
 1) For each locus, take the SNP with the least amount of missing data, and arbritrarily pick one of your outgroup species (because single SNPs without flanking bases cannot be used with the 'Spectrum.from_data_dict_corrected', this dataset would be more appropriate for use with polarized=False) [I think I have this pipeline working]
 
