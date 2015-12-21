@@ -96,12 +96,12 @@ rm(working_dir)
 lengthinput <- length(input)
 input <- input[2:lengthinput]
 
-matrixwidth <- length(unlist(strsplit(input[1],"\t")))
+matrixwidth <- length(unlist(strsplit(input[1],"[[:blank:]]")))
 
 inputmatrix <- matrix("",ncol=matrixwidth,nrow=(lengthinput-1))
 
 for (i in 1:(lengthinput-1)) {
-inputmatrix[i,] <- unlist(strsplit(input[i],"\t"))
+inputmatrix[i,] <- unlist(strsplit(input[i],"[[:blank:]]"))
 }
 
 rm(input)
@@ -168,7 +168,7 @@ flush.console()
 outgroupcol <- which(pop_coordinates[1,]=="outgroup")
 
 # Option one, here we go
-if (opt1=="yes") {
+if (opt1=="Y") {
 print(noquote("You've said you'd like to do opt1 - maximizing ingroup data when chosing the SNP from each locus. Here we go with that"))
 print(noquote(""))
 flush.console()
