@@ -31,18 +31,24 @@ pyplot.show()
 ```
 Calculating the Fst between your ingroup populations:
 ```
-fs.Fst()
+Fst = fs.Fst()
 ```
-To assess significance, sample:
+To assess significance, can scramble the population labels, sample, and see how that effects Fst:
 ```
 d = {}
 for i in range(1000):
-fsample = fs.sample()
-d[i] = fsample.Fst()
-sum(1 for i in d if d[i] < 0.3)
-```
+scrambled = fs.scramble_pop_ids()
+sample = scrambled.sample()
+d[i] = sample.Fst()
 
-Marginalizing the spectra in case we want to look at population-specific parameters (because we have only sampled across SNPs this seems a little dodgy):
+sum(1 for i in d if d[i] > Fst)
+```
+To further examine presence of substructure, 
+
+scrambled = fs.scramble_pop_ids()
+
+
+Marginalizing the spectra in case we want to look at population-specific parameters (because we have only sampled across SNPs this seems a little dodgy, so I haven't actually implemented this for our data):
 ```
 migratory = fs.marginalize([1])
 sedentary = fs.marginalize([0])
