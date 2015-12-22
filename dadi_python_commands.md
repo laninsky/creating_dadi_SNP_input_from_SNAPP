@@ -33,4 +33,26 @@ Calculating the Fst between your ingroup populations:
 ```
 fs.Fst()
 ```
+To assess significance, sample:
+```
+d = {}
+for i in range(1000):
+fsample = fs.sample()
+d[i] = fsample.Fst()
+sum(1 for i in d if d[i] < 0.3)
+```
+
+Marginalizing the spectra in case we want to look at population-specific parameters (because we have only sampled across SNPs this seems a little dodgy):
+```
+migratory = fs.marginalize([1])
+sedentary = fs.marginalize([0])
+#migratory.Watterson_theta()
+#sedentary.Watterson_theta()
+#migratory.pi()
+#sedentary.pi()
+migratory.Tajima_D()
+sedentary.Tajima_D()
+```
+
+
 
