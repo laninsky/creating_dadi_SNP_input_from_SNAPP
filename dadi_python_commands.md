@@ -1,5 +1,5 @@
 ###Instructions for windows###
-
+```
 open IPython (Py2.7)
 
 import numpy
@@ -11,7 +11,7 @@ import matplotlib
 import dadi
 
 import matplotlib.pyplot as pyplot
-
+```
 #The following instructions are for the "ingroup-SNP-optimized" file (opt1) created using creating_dadi_SNP_input_from_structure.R in this repository
 # This is step 3.3 from the dadi manual
 ```
