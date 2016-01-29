@@ -1,5 +1,5 @@
-#working_dir <- "C:/Users/a499a400/Dropbox/ceyx/dadi"
-#file_name <- "migr_vs_sedentary.txt"
+#working_dir <- "./"
+#file_name <- "structure_popmap.txt"
 #opt1 <- "Y"
 
 creating_dadi_SNP_input_from_structure <- function(working_dir,file_name,opt1,opt2) {
