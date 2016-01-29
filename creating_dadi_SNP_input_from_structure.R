@@ -1,6 +1,6 @@
-#working_dir <- "./"
-#file_name <- "structure_popmap.txt"
-#opt1 <- "Y"
+working_dir <- "./"
+file_name <- "structure_popmap.txt"
+opt1 <- "Y"
 
 creating_dadi_SNP_input_from_structure <- function(working_dir,file_name,opt1,opt2) {
 
@@ -190,7 +190,6 @@ temp1 <- matrix(0,ncol=no_pops,nrow=4)
 temp[1,j] <- y
 for (k in 1:no_pops) {
 if(k==no_pops) {
-
 temp1[1,k] <- temp1[1,k] + sum(inputmatrix[(pop_coordinates[2,k]):matrixlength,y]==1)
 temp1[2,k] <- temp1[2,k] + sum(inputmatrix[(pop_coordinates[2,k]):matrixlength,y]==2)
 temp1[3,k] <- temp1[3,k] + sum(inputmatrix[(pop_coordinates[2,k]):matrixlength,y]==3)
@@ -341,12 +340,13 @@ output[2:outputlength,3] <- replace(output[2:outputlength,3],output[2:outputleng
 output[2:outputlength,3] <- replace(output[2:outputlength,3],output[2:outputlength,3]==3,"G")
 output[2:outputlength,3] <- replace(output[2:outputlength,3],output[2:outputlength,3]==4,"T")
 
-output[2:outputlength,(no_pops*2)] <- replace(output[2:outputlength,(no_pops*2)],output[2:outputlength,(no_pops*2)]==1,"A")
-output[2:outputlength,(no_pops*2)] <- replace(output[2:outputlength,(no_pops*2)],output[2:outputlength,(no_pops*2)]==2,"C")
-output[2:outputlength,(no_pops*2)] <- replace(output[2:outputlength,(no_pops*2)],output[2:outputlength,(no_pops*2)]==3,"G")
-output[2:outputlength,(no_pops*2)] <- replace(output[2:outputlength,(no_pops*2)],output[2:outputlength,(no_pops*2)]==4,"T")
+output[2:outputlength,(3+no_pops)] <- replace(output[2:outputlength,(3+no_pops)],output[2:outputlength,(3+no_pops)]==1,"A")
+output[2:outputlength,(3+no_pops)] <- replace(output[2:outputlength,(3+no_pops)],output[2:outputlength,(3+no_pops)]==2,"C")
+output[2:outputlength,(3+no_pops)] <- replace(output[2:outputlength,(3+no_pops)],output[2:outputlength,(3+no_pops)]==3,"G")
+output[2:outputlength,(3+no_pops)] <- replace(output[2:outputlength,(3+no_pops)],output[2:outputlength,(3+no_pops)]==4,"T")
 
 write.table(output,"opt1_output.txt", sep="\t",quote=FALSE, row.names=FALSE,col.names=FALSE)
+}
 }
 
 
