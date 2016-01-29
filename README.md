@@ -19,10 +19,10 @@ sample3 outgroup 1 1 1 1 2 2 2
 #If your file doesn't have the pop_ID column and doesn't have the locus_IDs? 
 You can add the pop_IDs using the code at: https://github.com/laninsky/ambigoos_into_structure#what-if-you-wanted-to-add-a-population-identifier-column-after-the-individual-column
 
-After adding your pop_iDs, if your structure file already has one SNP per locus, you can then add "fake" locus IDs with the code in this folder called "add_locusIDs.R":
+After adding your pop_iDs, if your structure file already has one SNP per locus, you can then add "fake" locus IDs with the code in this folder called "add_locusIDs.R". This code will need some modification, as it was cribbed from a similar but not exact situation.
 
 #What if the encoding for the SNPs is 0-3 for A-T, and -9 for missing? 
-You can switch the encoding with the code in the folder called "switch_SNP_coding.R". This code assumes your file is otherwise ready to go (e.g. looks like the example file above, except with the SNP coding different).
+You can switch the encoding with the code in the folder called "switch_SNP_coding.R". This code assumes your file is otherwise ready to go (e.g. looks like the example file above, except with the SNP coding different).This code will need some modification, as it was cribbed from a similar but not exact situation.
 
 #To run the script
 Using a tab-delimited file ("namelist.txt") with your sample names (just once, rather than duplicated for each allele as they are in the structure file) in the left column, and your species/population designations in the right hand column (with outgroup species labelled as "outgroup")...
