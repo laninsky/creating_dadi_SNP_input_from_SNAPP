@@ -25,6 +25,11 @@ Change your pop_ids in the following line to the population names you have used.
 fs = dadi.Spectrum.from_data_dict(dd , pop_ids =['Pop1',	'Pop2', 'Pop3', 'Pop4'] ,projections =[6 , 22, 2, 2] ,polarized = False)
 ```
 
+To output this final fs:
+```
+fs.to_file("C:/Users/a499a400/Dropbox/ceyx/dadi/spectrum_output.txt")
+```
+
 If you are doing a two-population comparison (the above is not), this then plots the spectrum so you can visualize it
 ```
 dadi.Plotting.plot_single_2d_sfs( fs , vmin =1)
