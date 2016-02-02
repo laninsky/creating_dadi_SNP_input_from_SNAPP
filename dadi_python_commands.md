@@ -20,11 +20,12 @@ e.g.
 ```
 dd = dadi.Misc.make_data_dict("C:/Users/a499a400/Dropbox/ceyx/dadi/opt1_output.txt")
 ```
-Change your pop_ids in the following line to the population names you have used. For this file, we want to use polarized = False, automatically folding the spectra, because we aren't super confident in our ancestral states. To figure out the projections you should use, you might have to load the spectrum multiple times playing around with this. If you have no missing data, it should be 2N where N is your sample size for each populaiton. If you do have missing data, you need to assess the number of segregating sites for each combo using fs.S(). Our max ended up being (5128.02) for the following projection:
+Change your pop_ids in the following line to the population names you have used. For this file, we want to use polarized = False, automatically folding the spectra, because we aren't super confident in our ancestral states. To figure out the projections you should use, you might have to load the spectrum multiple times playing around with this. If you have no missing data, it should be 2N where N is your sample size for each populaiton. If you do have missing data, you need to assess the number of segregating sites for each combo using fs.S(). Our max ended up being (XXXX) for the following projection:
 ```
-fs = dadi.Spectrum.from_data_dict(dd , pop_ids =['Migratory',	'Sedentary'] ,projections =[6 , 32] ,polarized = False)
+fs = dadi.Spectrum.from_data_dict(dd , pop_ids =['Pop1',	'Pop2', 'Pop3', 'Pop4'] ,projections =[6 , 22, 2, 2] ,polarized = False)
 ```
-This then plots the spectrum so you can visualize it
+
+If you are doing a two-population comparison (the above is not), this then plots the spectrum so you can visualize it
 ```
 dadi.Plotting.plot_single_2d_sfs( fs , vmin =1)
 pyplot.show()
