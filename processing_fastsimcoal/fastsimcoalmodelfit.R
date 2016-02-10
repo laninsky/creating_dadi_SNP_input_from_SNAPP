@@ -35,6 +35,11 @@ toadd[1,] <- c(Rs,AdjsRs,RMSE)
 
 output <- cbind(output,toadd)
 
+input <- readLines(fastsimcoal_MSFS_file)
+
+x <- 2
+
+for (i in 1:no_scenarios) {
 
 
 
