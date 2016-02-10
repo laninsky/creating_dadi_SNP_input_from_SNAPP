@@ -1,5 +1,13 @@
 #You'll need to change the way the number of parameters in your data are calculated (line 34 onwards) as this will be specific to your dataset
 
+#example inputs
+#working_dir <- "C:/Users/a499a400/Dropbox/ceyx/dadi/runs/"
+#dadi_spectrum <- "spectrum_output.txt"
+#fastsimcoal_def_file <- "scenario.def"
+#fastsimcoal_MSFS_file <- "scenario_MSFS.obs"
+#no_sims <- 5
+# e.g., call function by fastsimcoalmodelfit("C:/Users/a499a400/Dropbox/ceyx/dadi/runs/", "spectrum_output.txt", "scenario.def", "scenario_MSFS.obs", 5)
+
 fastsimcoalmodelfit <- function(working_dir,dadi_spectrum,fastsimcoal_def_file,fastsimcoal_MSFS_file,no_sims) {
 
 library(stringr)
@@ -42,6 +50,7 @@ x <- x + 1
 output[i,beginning_output] <- 7 + x
 }
 
+output_no1st <- output
 input <- readLines(fastsimcoal_MSFS_file)
 
 x <- 1
@@ -61,6 +70,26 @@ i <- i + 1
 }
 
 write.table(output,"summarize_fastsimcoal.txt", sep="\t",quote=FALSE, row.names=FALSE,col.names=FALSE)
+
+x <- 1
+i <- 1
+while (i < length(input)) {
+if (grepl("observations",input[i],fixed=TRUE)) {
+x <- x + 1
+for (j in 1:no_sims) {
+temp <- unlist(strsplit(input[i+j+1],"\t"))
+fit <- lm(as.numeric(spectrum[-1]) ~ as.numeric(temp[-1]))
+output_no1st[x, beginning_output+j] <- summary(fit)$r.squared
+output_no1st[x, (beginning_output+j+no_sims)] <- 1- (((1-summary(fit)$r.squared)*(number_of_cats-1))/(number_of_cats-as.numeric(output_no1st[x,beginning_output])-1))
+output_no1st[x, (beginning_output+j+(2*no_sims))] <- mean((fit$residuals)^2)
+}
+}
+i <- i + 1
+}
+
+write.table(output,"summarize_fastsimcoal_no_monomorphic.txt", sep="\t",quote=FALSE, row.names=FALSE,col.names=FALSE)
+
+
 }
 
 
