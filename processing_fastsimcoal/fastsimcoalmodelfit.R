@@ -87,7 +87,7 @@ output_no1st[x, (beginning_output+j+(2*no_sims))] <- mean((fit$residuals)^2)
 i <- i + 1
 }
 
-write.table(output,"summarize_fastsimcoal_no_monomorphic.txt", sep="\t",quote=FALSE, row.names=FALSE,col.names=FALSE)
+write.table(output_no1st,"summarize_fastsimcoal_no_monomorphic.txt", sep="\t",quote=FALSE, row.names=FALSE,col.names=FALSE)
 
 
 }
