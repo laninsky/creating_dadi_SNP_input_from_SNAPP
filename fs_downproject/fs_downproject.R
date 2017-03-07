@@ -14,5 +14,5 @@ for (i in 1:no_of_pops) {
 
 pop_combinations <- expand.grid(array_expression)
 
-write.table("fs_combos.txt",quotes=FALSE,row.names=FALSE,col.names=FALSE)
+write.table(pop_combinations,"fs_combos.txt",quote=FALSE,row.names=FALSE,col.names=FALSE)
   
