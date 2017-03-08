@@ -7,7 +7,7 @@ You'll need fs_downproject.sh, fs_downproject.R and fs_downproject.py in the sam
 To run:
 
 ```
-i=your_dadi_input_file
+export i=your_dadi_input_file
 #e.g. i=opt1_output.txt
 
 bash fs_downproject.sh
