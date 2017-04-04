@@ -26,17 +26,25 @@ with open('maxcount.txt', 'r') as f:
 first_line = [int(i) for i in first_line]
 fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =first_line ,polarized = False)
 final_fs=fs.S()
+
 final_spectrum = fs
-orig_pop_projections = first_line
+max_pop_projections = first_line
+min_pop_projections = first_line
+temp_first_line = first_line
 
-while new_fs <- final_fs:    
+new_fs=fs.S()
+
+for i in range(0,no_of_pops):
     temp_first_line = first_line
-    for i in range(0,no_of_pops):
-        temp_first_line[i] = first_line[i]-1
-        temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =temp_first_line ,polarized = False)
-        temp_fs=temp_fs.S()
-
-
+    temp_first_line[i] = first_line[i]-1
+    temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =temp_first_line ,polarized = False)        
+    while temp_fs.S() > new_fs: 
+        max_pop_projections[i] = temp_first_line[i]
+        new_fs=temp.S()
+        max_pop_projections[i] = temp_first_line[i]
+        temp_first_line[i] = temp_first_line[i]-1
+        temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =temp_first_line ,polarized = False)        
+        temp_fs_S = temp_fs.S()
         
         
 #Do another run increasing the population number        
