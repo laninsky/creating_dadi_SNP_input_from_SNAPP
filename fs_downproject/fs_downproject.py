@@ -19,12 +19,28 @@ headerline.remove('Allele2')
 no_of_pops = (len(headerline)-2)/2
 pop_name = headerline[0:no_of_pops]
 
-final_fs = 0
-final_spectrum = 0
-pop_projections = 0
-x = 0
+with open('maxcount.txt', 'r') as f:
+    first_line = f.readline()
+    first_line=first_line.replace('\n', '').split(' ')
 
-print 'Up to the following line'
+first_line = [int(i) for i in first_line]
+fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =first_line ,polarized = False)
+final_fs=fs.S()
+final_spectrum = fs
+orig_pop_projections = first_line
+
+while new_fs <- final_fs:    
+    temp_first_line = first_line
+    for i in range(0,no_of_pops):
+        temp_first_line[i] = first_line[i]-1
+        temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =temp_first_line ,polarized = False)
+        temp_fs=temp_fs.S()
+
+
+        
+        
+#Do another run increasing the population number        
+        
 with open('fs_combos.txt', 'r') as myfile:
     for line in myfile:
         line=line.replace('\n', '').split(' ')
