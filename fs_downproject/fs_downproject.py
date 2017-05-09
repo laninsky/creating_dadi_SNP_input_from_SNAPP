@@ -151,11 +151,12 @@ for i in range(0,no_of_pops):
         min_max_ranges.append(temp_min)
     else:
         min_max_ranges.append(range(min_pop_projections[i], (max_pop_projections[i]+1)))
-    import itertools
-    allcombos = list(itertools.product(*min_max_ranges))
-    with open("final_projection_optimization.txt", "a") as myfile:
-       myfile.write('There are this many combinations:'+'\n')
-       myfile.write(str(len(allcombos))+'\n')
+
+import itertools
+allcombos = list(itertools.product(*min_max_ranges))
+with open("final_projection_optimization.txt", "a") as myfile:
+   myfile.write('There are this many combinations:'+'\n')
+   myfile.write(str(len(allcombos))+'\n')
 
 for j in range(1,len(allcombos)):
    temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =allcombos[j-1] ,polarized = False)
