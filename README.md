@@ -30,6 +30,9 @@ This code will need some modification, as it was cribbed from a similar but not 
 #What if the encoding for the SNPs is 0-3 for A-T, and -9 for missing? 
 You can switch the encoding with the code in the folder called "switch_SNP_coding.R". This code assumes your file is otherwise ready to go (e.g. looks like the example file above, except with the SNP coding different).This code will need some modification, as it was cribbed from a similar but not exact situation.
 
+#What if you don't have an outgroup?
+You can run the add_outgroup.R code to arbritrarily duplicate the first sample in your file and call it the outgroup. This only makes sense if you are using the folded spectrum option below rather than the unfolded (where the ancestral state actually matters).
+
 #To run the script
 Using a tab-delimited file ("namelist.txt") with your sample names (just once, rather than duplicated for each allele as they are in the structure file) in the left column, and your species/population designations in the right hand column (with outgroup species labelled as "outgroup")...
 
