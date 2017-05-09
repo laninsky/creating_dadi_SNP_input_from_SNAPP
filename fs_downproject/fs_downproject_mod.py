@@ -33,8 +33,7 @@ max_pop_projections = first_line[:]
 new_fs=fs.S()
 with open("max_projections.txt", "a") as myfile:
     myfile.write(str(new_fs))
-    myfile.write(str(max_pop_projections))
-    myfile.write('\n')
+    myfile.write(str(max_pop_projections)+'\n')
 for i in range(0,no_of_pops):
     temp_first_line = first_line[:]
     if (temp_first_line[i]-10) >= 1:
@@ -53,16 +52,15 @@ for i in range(0,no_of_pops):
         new_fs=temp_fs.S()
         with open("max_projections.txt", "a") as myfile:
             myfile.write(str(new_fs))
-            myfile.write(str(temp_first_line))
-            myfile.write('\n')
+            myfile.write(str(temp_first_line)+'\n')
         if (temp_first_line[i]-10) >= 1:
             temp_first_line[i] = temp_first_line[i]-10            
         elif (temp_first_line[i]-5) >= 1:
-            temp_first_line[i] = temp_first_line[i]+5
+            temp_first_line[i] = temp_first_line[i]-5
         elif (temp_first_line[i]-2)  >= 1:
-            temp_first_line[i] = temp_first_line[i]+2
+            temp_first_line[i] = temp_first_line[i]-2
         elif (temp_first_line[i]-1)  >= 1:
-            temp_first_line[i] = temp_first_line[i]+1
+            temp_first_line[i] = temp_first_line[i]-1
         else:
             temp_first_line[i] = temp_first_line[i]
         temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =temp_first_line ,polarized = False)                   
@@ -90,8 +88,7 @@ for i in range(0,no_of_pops):
         new_fs=temp_fs.S()
         with open("min_projections.txt", "a") as myfile:
             myfile.write(str(new_fs))
-            myfile.write(str(temp_first_line))
-            myfile.write('\n')
+            myfile.write(str(temp_first_line)+'\n')
         if (temp_first_line[i]+10) <= max_pop_projections[i]:
             temp_first_line[i] = temp_first_line[i]+10            
         elif (temp_first_line[i]+5) <= max_pop_projections[i]:
