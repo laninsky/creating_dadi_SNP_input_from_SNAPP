@@ -31,16 +31,38 @@ final_spectrum = fs[:]
 max_pop_projections = first_line[:]
 
 new_fs=fs.S()
+with open("max_projections.txt", "a") as myfile:
+    myfile.write(new_fs,max_pop_projections)
 
 for i in range(0,no_of_pops):
     temp_first_line = first_line[:]
-    temp_first_line[i] = temp_first_line[i]-1
+    if (temp_first_line[i]-10) >= 1:
+        temp_first_line[i] = temp_first_line[i]-10            
+    elif (temp_first_line[i]-5) >= 1:
+        temp_first_line[i] = temp_first_line[i]-5
+    elif (temp_first_line[i]-2) >= 1:
+        temp_first_line[i] = temp_first_line[i]-2
+    elif (temp_first_line[i]-1) >= 1:
+        temp_first_line[i] = temp_first_line[i]-1
+    else:
+        continue
     temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =temp_first_line ,polarized = False)        
     while temp_fs.S() > new_fs:
         max_pop_projections[i] = temp_first_line[i]
         new_fs=temp.S()
-        temp_first_line[i] = temp_first_line[i]-1
-        temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =temp_first_line ,polarized = False)        
+        with open("max_projections.txt", "a") as myfile:
+            myfile.write(new_fs,temp_first_line)
+        if (temp_first_line[i]-10) >= 1:
+            temp_first_line[i] = temp_first_line[i]-10            
+        elif (temp_first_line[i]-5) >= 1:
+            temp_first_line[i] = temp_first_line[i]+5
+        elif (temp_first_line[i]-2)  >= 1:
+            temp_first_line[i] = temp_first_line[i]+2
+        elif (temp_first_line[i]-1)  >= 1:
+            temp_first_line[i] = temp_first_line[i]+1
+        else:
+            temp_first_line[i] = temp_first_line[i]
+        temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =temp_first_line ,polarized = False)                   
                 
 #Do another run increasing the allele sample sizes starting from n=1 for all samples to see if we converge on the same outcome
 first_line = [1 for i in first_line]
@@ -63,6 +85,8 @@ for i in range(0,no_of_pops):
     while temp_fs.S() > new_fs: 
         min_pop_projections[i] = temp_first_line[i]
         new_fs=temp_fs.S()
+        with open("min_projections.txt", "a") as myfile:
+            myfile.write(new_fs,temp_first_line)
         if (temp_first_line[i]+10) <= max_pop_projections[i]:
             temp_first_line[i] = temp_first_line[i]+10            
         elif (temp_first_line[i]+5) <= max_pop_projections[i]:
@@ -73,7 +97,7 @@ for i in range(0,no_of_pops):
             temp_first_line[i] = temp_first_line[i]+1
         else:
             temp_first_line[i] = temp_first_line[i]
-        temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =temp_first_line ,polarized = False)            
+        temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =temp_first_line ,polarized = False)
 
 #If either approach (top down, bottom up) suggests down-projecting, checking for any further tweaks, otherwise writing out
 if max_pop_projections == min_pop_projections:
