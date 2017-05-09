@@ -32,6 +32,10 @@ You can switch the encoding with the code in the folder called "switch_SNP_codin
 
 #What if you don't have an outgroup?
 You can run the add_outgroup.R code to arbritrarily duplicate the first sample in your file and call it the outgroup. This only makes sense if you are using the folded spectrum option below rather than the unfolded (where the ancestral state actually matters).
+```
+echo structure_name > file_name
+Rscript add_outgroup.R
+```
 
 #To run the script
 Using a tab-delimited file ("namelist.txt") with your sample names (just once, rather than duplicated for each allele as they are in the structure file) in the left column, and your species/population designations in the right hand column (with outgroup species labelled as "outgroup")...
