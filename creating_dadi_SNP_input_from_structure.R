@@ -161,10 +161,6 @@ print(noquote("We've got the data into a format that we can start manipulating t
 print(noquote(""))
 flush.console()
 
-print(noquote("We've got the data in a format that we can start manipulating to get the SNP frequencies from"))
-print(noquote(""))
-flush.console()
-
 outgroupcol <- which(pop_coordinates[1,]=="outgroup")
 
 # Option one, here we go
@@ -351,7 +347,7 @@ write.table(output,"opt1_output.txt", sep="\t",quote=FALSE, row.names=FALSE,col.
 
 
 
-###########
+########### OPT 2 NOT FUNCTIONAL YET BELOW THIS LINE #############
 
 print(x)
 pop_coordinate_temp <- rbind(inputmatrixdata[x,1],x)
