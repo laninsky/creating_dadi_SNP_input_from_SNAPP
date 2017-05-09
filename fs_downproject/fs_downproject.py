@@ -1,6 +1,6 @@
 import numpy
 import scipy
-import matplotlib
+#import matplotlib
 import dadi
 
 with open('file_name', 'r') as myfile:
