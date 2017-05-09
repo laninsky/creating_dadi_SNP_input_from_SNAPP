@@ -50,7 +50,7 @@ for i in range(0,no_of_pops):
     temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =temp_first_line ,polarized = False)        
     while temp_fs.S() > new_fs:
         max_pop_projections[i] = temp_first_line[i]
-        new_fs=temp.S()
+        new_fs=temp_fs.S()
         with open("max_projections.txt", "a") as myfile:
             myfile.write(str(new_fs))
             myfile.write(str(temp_first_line))
