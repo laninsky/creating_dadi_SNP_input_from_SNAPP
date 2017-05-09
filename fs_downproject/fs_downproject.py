@@ -101,38 +101,74 @@ for i in range(0,no_of_pops):
             temp_first_line[i] = temp_first_line[i]
         temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =temp_first_line ,polarized = False)
 
-#If either approach (top down, bottom up) suggests down-projecting, checking for any further tweaks, otherwise writing out
+#If either approach (top down, bottom up) suggests down-projecting, checking for any further tweaks by doing another bottom up, otherwise writing out
 if max_pop_projections == min_pop_projections:
       final_spectrum = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =max_pop_projections ,polarized = False)
 else:
-    final_spectrum = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =min_pop_projections ,polarized = False)
-    final_fs = final_spectrum.S()
-    min_max_ranges = []
+    first_line = min_pop_projections[:]
+    lil_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =first_line ,polarized = False)
     for i in range(0,no_of_pops):
-        if min_pop_projections[i] == max_pop_projections[i]:
-            temp_min = []
-            temp_min.append(min_pop_projections[i])
-            min_max_ranges.append(temp_min)
+        new_fs=lil_fs.S()
+        temp_first_line = first_line[:]
+        if (temp_first_line[i]+10) <= max_pop_projections[i]:
+            temp_first_line[i] = temp_first_line[i]+10            
+        elif (temp_first_line[i]+5) <= max_pop_projections[i]:
+            temp_first_line[i] = temp_first_line[i]+5
+        elif (temp_first_line[i]+2) <= max_pop_projections[i]:
+            temp_first_line[i] = temp_first_line[i]+2
+        elif (temp_first_line[i]+1) <= max_pop_projections[i]:
+            temp_first_line[i] = temp_first_line[i]+1
         else:
-            min_max_ranges.append(range(min_pop_projections[i], (max_pop_projections[i]+1)))
+            continue
+        temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =temp_first_line ,polarized = False)        
+        while temp_fs.S() > new_fs: 
+            min_pop_projections[i] = temp_first_line[i]
+            new_fs=temp_fs.S()
+            with open("min_projections.txt", "a") as myfile:
+                myfile.write(str(new_fs))
+                myfile.write(str(temp_first_line)+'\n')
+            if (temp_first_line[i]+10) <= max_pop_projections[i]:
+                temp_first_line[i] = temp_first_line[i]+10            
+            elif (temp_first_line[i]+5) <= max_pop_projections[i]:
+                temp_first_line[i] = temp_first_line[i]+5
+            elif (temp_first_line[i]+2) <= max_pop_projections[i]:
+                temp_first_line[i] = temp_first_line[i]+2
+            elif (temp_first_line[i]+1) <= max_pop_projections[i]:
+                temp_first_line[i] = temp_first_line[i]+1
+            else:
+                temp_first_line[i] = temp_first_line[i]
+            temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =temp_first_line ,polarized = False)  
+    
+#Final Final optimization    
+    
+final_spectrum = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =min_pop_projections ,polarized = False)
+final_fs = final_spectrum.S()
+min_max_ranges = []
+for i in range(0,no_of_pops):
+    if min_pop_projections[i] == max_pop_projections[i]:
+        temp_min = []
+        temp_min.append(min_pop_projections[i])
+        min_max_ranges.append(temp_min)
+    else:
+        min_max_ranges.append(range(min_pop_projections[i], (max_pop_projections[i]+1)))
     import itertools
     allcombos = list(itertools.product(*min_max_ranges))
     with open("final_projection_optimization.txt", "a") as myfile:
-            myfile.write('There are this many combinations:'+'\n')
-            myfile.write(str(len(allcombos))+'\n')
+       myfile.write('There are this many combinations:'+'\n')
+       myfile.write(str(len(allcombos))+'\n')
 
-    for j in range(1,len(allcombos)):
-        temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =allcombos[j-1] ,polarized = False)
-        if temp_fs.S() > final_fs:
-            with open("final_projection_optimization.txt", "a") as myfile:
-                myfile.write('Up to this combo:'+'\n')
-                myfile.write(str(j)+'\n')
-                myfile.write(str(new_fs))
-                myfile.write(str(temp_first_line)+'\n')
-            final_spectrum = temp_fs[:]
-            final_fs = temp_fs.S() 
-            final_projections = allcombos[j-1]
-            max_pop_projections = final_projections
+for j in range(1,len(allcombos)):
+   temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =allcombos[j-1] ,polarized = False)
+   if temp_fs.S() > final_fs:
+       with open("final_projection_optimization.txt", "a") as myfile:
+           myfile.write('Up to this combo:'+'\n')
+           myfile.write(str(j)+'\n')
+           myfile.write(str(new_fs))
+           myfile.write(str(allcombos[j-1])+'\n')
+       final_spectrum = temp_fs[:]
+       final_fs = temp_fs.S() 
+       final_projections = allcombos[j-1]
+       max_pop_projections = final_projections
 
 final_spectrum.to_file("spectrum_output.txt")
 final_fs = final_spectrum.S()
