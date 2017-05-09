@@ -42,7 +42,7 @@ sample3 outgroup
 
 ...this script will create a SNP input file for dadi (pulling out one SNP per locus) using two slightly different implementations:
 
-1) For each locus, take the SNP with the least amount of missing data, and arbritrarily pick one of your outgroup species (because single SNPs without flanking bases cannot be used with the 'Spectrum.from_data_dict_corrected', this dataset would be more appropriate for use with polarized=False) [I think I have this pipeline working]
+1) For each locus, take the SNP with the least amount of missing data, and arbritrarily pick one of your outgroup species (because single SNPs without flanking bases cannot be used with the 'Spectrum.from_data_dict_corrected', this dataset would be more appropriate for use with polarized=False) [I think I have this pipeline working]. The beauty about this is that if you don't have an outgroup you can just duplicate one of your samples and call it the outgroup, because it won't be used for any downstream calculations.
 
 2) For each locus, take the SNP where your multiple outgroups have the same 'ancestral' state (if multiple SNPs are in this category, then take the SNP with the least amount of missing data for the ingroup species. If no SNPs in this category, none are written out for this locus). This will hopefully reduce some of the bias detailed by Hernandez et al. 2007: http://mbe.oxfordjournals.org/content/24/8/1792 [This is still in process and is not ready for consumption]
 
