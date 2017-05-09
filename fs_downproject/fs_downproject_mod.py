@@ -109,16 +109,30 @@ else:
     final_fs = final_spectrum.S()
     min_max_ranges = []
     for i in range(0,no_of_pops):
-        min_max_ranges.append(range(min_pop_projections[i], max_pop_projections[i]))
+        if min_pop_projections[i] == max_pop_projections[i]:
+            temp_min = []
+            temp_min.append(min_pop_projections[i])
+            min_max_ranges.append(temp_min)
+        else:
+            min_max_ranges.append(range(min_pop_projections[i], (max_pop_projections[i]+1)))
     import itertools
     allcombos = list(itertools.product(*min_max_ranges))
+    with open("final_projection_optimization.txt", "a") as myfile:
+            myfile.write('There are this many combinations:'+'\n')
+            myfile.write(str(len(allcombos))+'\n')
+
     for j in range(1,len(allcombos)):
         temp_fs = dadi.Spectrum.from_data_dict(dd , pop_ids =pop_name ,projections =allcombos[j-1] ,polarized = False)
         if temp_fs.S() > final_fs:
+            with open("final_projection_optimization.txt", "a") as myfile:
+                myfile.write('Up to this combo:'+'\n')
+                myfile.write(str(j)+'\n')
+                myfile.write(str(new_fs))
+                myfile.write(str(temp_first_line)+'\n')
             final_spectrum = temp_fs[:]
             final_fs = temp_fs.S() 
             final_projections = allcombos[j-1]
-    max_pop_projections = final_projections
+            max_pop_projections = final_projections
 
 final_spectrum.to_file("spectrum_output.txt")
 final_fs = final_spectrum.S()
