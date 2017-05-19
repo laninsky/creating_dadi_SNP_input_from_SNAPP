@@ -3,7 +3,7 @@
 # have multiple populations and a denser dataset, excel will choke and not be able to open the SFS
 
 # Define your SFS path/file name
-SFS_file <- "no_mig_MSFS.obs"
+SFS_file <- "no_mig_5/no_mig_MSFS.obs"
 
 SFS <- readLines(SFS_file)
 SFS_vector <- unlist(strsplit(SFS[3],"\\s+"))
