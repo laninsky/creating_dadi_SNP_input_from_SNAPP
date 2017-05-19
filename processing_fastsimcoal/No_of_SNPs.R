@@ -11,5 +11,8 @@ SFS_vector <- unlist(strsplit(SFS[3],"\\s+"))
 total_SNP_no <- sum(as.numeric(SFS_vector))
 non_monomorphic_SNPs <- sum(as.numeric(SFS_vector[-1]))
 
+total_SNP_no 
+
+non_monomorphic_SNPs
 
 
