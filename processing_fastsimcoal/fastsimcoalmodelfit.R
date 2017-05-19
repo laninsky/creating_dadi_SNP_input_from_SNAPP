@@ -1,3 +1,9 @@
+#After using dadi to generate the joint SFS for your populations, you might have carried out some simulations 
+#in dadi to try and fit a demographic model. This code assumes you have a ton of scenarios in your lhoodObs 
+#file which matches a *.def file, and you are interested in looking at the model fit in comparison with your 
+#observed site frequency spectrum.
+
+
 #You'll need to change the way the number of parameters in your data are calculated (line 34 onwards) as this will be specific to your dataset
 
 #example inputs
