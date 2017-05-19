@@ -9,7 +9,7 @@ SFS <- readLines(SFS_file)
 SFS_vector <- unlist(strsplit(SFS[3],"\\s+"))
 
 total_SNP_no <- sum(as.numeric(SFS_vector))
-monomorphic_SNPs <- sum(as.numeric(SFS_vector[-1]))
+non_monomorphic_SNPs <- sum(as.numeric(SFS_vector[-1]))
 
 
 
