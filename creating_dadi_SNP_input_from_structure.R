@@ -1,11 +1,19 @@
-working_dir <- "./"
-file_name <- "structure_popmap.txt"
-opt1 <- "Y"
+#Example variables
+#working_dir <- "./"
+#file_name <- "structure_popmap.txt"
+#opt1 <- "Y"
 
-creating_dadi_SNP_input_from_structure <- function(working_dir,file_name,opt1,opt2) {
+# Hoping one day to code an option where flanking bases are used so spectrum can be polarized which will invoke the opt2 option
+# (with opt1 how the code is implemented currently)
+#creating_dadi_SNP_input_from_structure <- function(working_dir,file_name,opt1,opt2) {
+
+
+creating_dadi_SNP_input_from_structure <- function(working_dir,file_name) {
 
 library(stringr)
 
+# If Opt2 ever comes online, this will need to be commented out and included in the function call.  
+opt1 <- "Y"  
 ##############TO ADD: SPECIFY CUSTOM NAMELIST.TXT NAME INSTEAD OF IT HAVING TO BE NAMELIST.TXT
 
 # Throwing out error messages if any of the inputs are missing from the command line
@@ -35,11 +43,12 @@ error_three <- 3
 killswitch <- "yes"
 }
 
-if(missing(opt2)) {
-x <- 1
-error_four <- 4
-killswitch <- "yes"
-}
+# Hoping one day to code an option where flanking bases are used so spectrum can be polarized.
+#if(missing(opt2)) {
+#x <- 1
+#error_four <- 4
+#killswitch <- "yes"
+#}
 
 if(x==1) {
 cat("Call the program by creating_dadi_SNP_input_from_structure(working_dir,file_name,opt1,opt2), where:\nworking_dir == pathway to the folder with your structure.tsv file e.g. \"C:/blahblahblah\" \nfile_name == the name of your structure.tsv file e.g. \"data.structure.tsv\"\nopt1 ==  \"Y\"/\"N\" - do you wish to focus on your ingroup populations rather than chosing SNPs \nwhere the state is the same over all outgroup species?\nopt2 == \"Y\"/\"N\" - do you wish to only consider SNPs where all outgroups have the same state? \n(note - you can do both opt1 and opt2)\n\nExample of input:\ngenetic_diversity_diffs(\"C:/Users/Folder/\",\"data.structure.tsv\",\"Y\",\"Y\")\n\nSpecific errors/missing inputs:\n")
@@ -53,9 +62,9 @@ cat("Sorry, I am missing a filename for your structure.tsv file\nfile_name == th
 if(error_three==3) {
 cat("Would you like to create a dataset arbritrarily picking one of your outgroup species for one \nSNP per locus?\nopt1== \"Y\"/\"N\"\n\n")
 }
-if(error_four==4) {
-cat("Would you like create a dataset taking the SNP where your multiple outgroups have the same \n'ancestral' state?\nopt2== \"Y\"/\"N\"\n\n")
-}
+#if(error_four==4) {
+#cat("Would you like create a dataset taking the SNP where your multiple outgroups have the same \n'ancestral' state?\nopt2== \"Y\"/\"N\"\n\n")
+#}
 
 #Checking status of working directory
 print(noquote("STEP ONE: Loading in all the variables"))
@@ -165,7 +174,7 @@ outgroupcol <- which(pop_coordinates[1,]=="outgroup")
 
 # Option one, here we go
 if (opt1=="Y") {
-print(noquote("You've said you'd like to do opt1 - maximizing ingroup data when chosing the SNP from each locus. Here we go with that"))
+print(noquote("You've said you'd like to maximize ingroup data when chosing the SNP from each locus. Here we go with that"))
 print(noquote(""))
 flush.console()
 
@@ -349,30 +358,21 @@ write.table(output,"opt1_output.txt", sep="\t",quote=FALSE, row.names=FALSE,col.
 
 ########### OPT 2 NOT FUNCTIONAL YET BELOW THIS LINE #############
 
-print(x)
-pop_coordinate_temp <- rbind(inputmatrixdata[x,1],x)
-pop_coordinates <- cbind(pop_coordinates,pop_coordinate_temp)
-i <- x
-} else {
-i <- matrixlength
-}
-}
+#print(x)
+#pop_coordinate_temp <- rbind(inputmatrixdata[x,1],x)
+#pop_coordinates <- cbind(pop_coordinates,pop_coordinate_temp)
+#i <- x
+#} else {
+#i <- matrixlength
+#}
+#}
 
+#while (inputmatrix[1,i]==inputmatrix[1,(i+x)]) {
+#x <- x+1
+#}
 
+#i <- i + x }
 
+#4:
 
-
-
-while (inputmatrix[1,i]==inputmatrix[1,(i+x)]) {
-x <- x+1
-}
-
-
-
-
-i <- i + x }
-
-
-4:
-
-write.table(temp, "tempout",quote=FALSE, col.names=FALSE,row.names=FALSE)
+#write.table(temp, "tempout",quote=FALSE, col.names=FALSE,row.names=FALSE)
