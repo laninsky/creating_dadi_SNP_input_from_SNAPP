@@ -47,3 +47,15 @@ sample3 outgroup
 ```
 
 ...this script will create a SNP input file for dadi (pulling out one SNP per locus) using the following rules: For each locus, take the SNP with the least amount of missing data, and arbritrarily pick one of your outgroup species (because single SNPs without flanking bases cannot be used with the 'Spectrum.from_data_dict_corrected', this dataset would be more appropriate for use with polarized=False i.e. folded spectrum). The beauty about this is that if you don't have an outgroup you can just duplicate one of your samples and call it the outgroup, because it won't be used for any downstream calculations.
+
+To actually call the script, paste the entire contents of creating_dadi_SNP_input_from_structure.R into your R console (or source it if you like). Then within the R window, you can execute it by:
+```
+creating_dadi_SNP_input_from_structure(working_dir,file_name)
+```
+where:
+working_dir == pathway to the folder with your structure.tsv file e.g. "C:/blahblahblah" 
+file_name == the name of your structure.tsv file e.g. "data.structure.tsv"
+```
+e.g.
+creating_dadi_SNP_input_from_structure("C:\\Users\\Alana\\Dropbox\\katie","2_tweaked_input_file_outgroup.txt")
+```
