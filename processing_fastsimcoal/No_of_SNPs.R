@@ -3,7 +3,12 @@
 # have multiple populations and a denser dataset, excel will choke and not be able to open the SFS
 
 # Define your SFS path/file name
-SFS_file <- "no_mig_5/no_mig_MSFS.obs"
+#SFS_file <- "no_mig_5/no_mig_MSFS.obs"
+
+# or do it for files in separate directories
+folder_files <- list.files(recursive=TRUE)[2:length(list.dirs())]
+
+for (SFS_file in folder_files) {
 
 SFS <- readLines(SFS_file)
 SFS_vector <- unlist(strsplit(SFS[3],"\\s+"))
@@ -11,8 +16,8 @@ SFS_vector <- unlist(strsplit(SFS[3],"\\s+"))
 total_SNP_no <- sum(as.numeric(SFS_vector))
 non_monomorphic_SNPs <- sum(as.numeric(SFS_vector[-1]))
 
-total_SNP_no 
+print(total_SNP_no)
 
-non_monomorphic_SNPs
+print(non_monomorphic_SNPs)
 
-
+}
