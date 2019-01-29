@@ -67,13 +67,21 @@ Chan, K.O., Alexander, A.M., Grismer, L.L., Su, Y.C., Grismer, J.L., Quah, E.S. 
 
 If you want to cite the specific version of the script you used, I suggest the following:
 
-Alexander, A. 2017. creating_dadi_SNP_input_from_structure v1.0.0. Available from hhttps://github.com/laninsky/creating_dadi_SNP_input_from_structure
+Alexander, A. 2017. creating_dadi_SNP_input_from_structure v0.0. Available from hhttps://github.com/laninsky/creating_dadi_SNP_input_from_structure
 
 This pipeline also wouldn't be possible without:
 
 R: R Core Team. 2015. R: A language and environment for statistical computing. URL http://www.R-project.org/. R Foundation for Statistical Computing, Vienna, Austria. https://www.r-project.org/
 
-Stringr: Hadley Wickham (2012). stringr: Make it easier to work with strings.. R package version 0.6.2. http://CRAN.R-project.org/package=stringr (for up-to-date citation information run citation("stringr" in R)
+stringr: Hadley Wickham (2012). stringr: Make it easier to work with strings.. R package version 0.6.2. http://CRAN.R-project.org/package=stringr (for up-to-date citation information run citation("stringr" in R)
+
+dadi: Gutenkunst, R.N., Hernandez, R.D., Williamson, S.H. and Bustamante, C.D., 2009. Inferring the joint demographic history of multiple populations from multidimensional SNP frequency data. PLoS genetics, 5(10), p.e1000695.
+
+numpy: Walt, S.V.D., Colbert, S.C. and Varoquaux, G., 2011. The NumPy array: a structure for efficient numerical computation. Computing in Science & Engineering, 13(2), pp.22-30.
+
+scipy: Jones, E., Oliphant, T. and Peterson, P., 2014. {SciPy}: open source scientific tools for {Python}.
+
+python: https://www.python.org/
 
 # Version history
 0.0: Version used in Chan et al. (2017)
