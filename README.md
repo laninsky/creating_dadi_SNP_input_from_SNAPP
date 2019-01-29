@@ -1,4 +1,4 @@
-# creating_dadi_SNP_input_from_structure
+# creating_dadi_SNP_input_from_structure v0.0
 Do you want to chuck your SNPs through dadi, but are coming from stacks/SNAPP? This script might help
 
 # How does it work?
@@ -59,3 +59,21 @@ file_name == the name of your structure.tsv file e.g. "data.structure.tsv"
 e.g.
 creating_dadi_SNP_input_from_structure("C:\\Users\\Alana\\Dropbox\\katie","2_tweaked_input_file_outgroup.txt")
 ```
+
+# Suggested citation
+creating_dadi_SNP_input_from_structure was first published in:
+
+Chan, K.O., Alexander, A.M., Grismer, L.L., Su, Y.C., Grismer, J.L., Quah, E.S. and Brown, R.M., 2017. Species delimitation with gene flow: A methodological comparison and population genomics approach to elucidate cryptic species boundaries in Malaysian Torrent Frogs. Molecular ecology, 26(20), pp.5435-5450.
+
+If you want to cite the specific version of the script you used, I suggest the following:
+
+Alexander, A. 2017. creating_dadi_SNP_input_from_structure v1.0.0. Available from hhttps://github.com/laninsky/creating_dadi_SNP_input_from_structure
+
+This pipeline also wouldn't be possible without:
+
+R: R Core Team. 2015. R: A language and environment for statistical computing. URL http://www.R-project.org/. R Foundation for Statistical Computing, Vienna, Austria. https://www.r-project.org/
+
+Stringr: Hadley Wickham (2012). stringr: Make it easier to work with strings.. R package version 0.6.2. http://CRAN.R-project.org/package=stringr (for up-to-date citation information run citation("stringr" in R)
+
+# Version history
+0.0: Version used in Chan et al. (2017)
