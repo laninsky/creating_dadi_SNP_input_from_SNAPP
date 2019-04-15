@@ -25,6 +25,11 @@ After adding your pop_IDs (and if it has the header line) , if your structure fi
 echo structure_name > file_name
 Rscript add_locusIDs.R
 ```
+Note, if you need to add a header line first, you can do something like (it can literally be #blahblahblah - just needs a placeholder header):
+```
+echo "#blahblahblah" > my_new_structure_file.txt
+cat structure_name >> my_new_structure_file.txt
+```
 
 # What if the encoding for the SNPs is 0-3 for A-T, and -9 for missing? 
 You can switch the encoding with the code in the folder called "switch_SNP_coding.R". This code assumes your file is otherwise ready to go (e.g. looks like the example file above, except with the SNP coding different).This code will need some modification, as it was cribbed from a similar but not exact situation.
