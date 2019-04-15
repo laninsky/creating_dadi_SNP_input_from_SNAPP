@@ -1,7 +1,7 @@
 filename <- readLines("file_name")
 input_file <- readLines(filename)
 
-number_of_sites <- length(unlist(strsplit(input_file[2],"\t")))-2
+number_of_sites <- length(unlist(strsplit(input_file[2],"\\s+")))-2
 site_array <- c(1:number_of_sites)
 site_array <- paste(c("","",site_array),collapse="\t")
 
